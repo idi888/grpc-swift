@@ -27,18 +27,18 @@ open class ServiceServer {
   fileprivate let servicesByName: [String: ServiceProvider]
   
   /// Create a server that accepts insecure connections.
-  public init(address: String, serviceProviders: [ServiceProvider]) {
+  public init(address: String, serviceProviders: [ServiceProvider], queueTimeout: TimeInterval = -1) {
     gRPC.initialize()
     self.address = address
-    server = Server(address: address)
+    server = Server(address: address, queueTimeout: queueTimeout)
     servicesByName = Dictionary(uniqueKeysWithValues: serviceProviders.map { ($0.serviceName, $0) })
   }
 
   /// Create a server that accepts secure connections.
-  public init(address: String, certificateString: String, keyString: String, rootCerts: String? = nil, serviceProviders: [ServiceProvider]) {
+  public init(address: String, certificateString: String, keyString: String, rootCerts: String? = nil, serviceProviders: [ServiceProvider], queueTimeout: TimeInterval = -1) {
     gRPC.initialize()
     self.address = address
-    server = Server(address: address, key: keyString, certs: certificateString, rootCerts: rootCerts)
+    server = Server(address: address, key: keyString, certs: certificateString, rootCerts: rootCerts, queueTimeout: queueTimeout)
     servicesByName = Dictionary(uniqueKeysWithValues: serviceProviders.map { ($0.serviceName, $0) })
   }
 

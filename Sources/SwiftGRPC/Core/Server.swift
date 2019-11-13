@@ -79,7 +79,7 @@ public class Server {
           try handler.requestCall(tag: Server.handlerCallTag)
 
           // block while waiting for an incoming request
-          let event = self.completionQueue.wait(timeout: queueTimeout)
+            let event = self.completionQueue.wait(timeout: self.queueTimeout)
 
           if event.type == .complete {
             if event.tag == Server.handlerCallTag {
