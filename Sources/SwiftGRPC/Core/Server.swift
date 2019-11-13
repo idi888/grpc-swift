@@ -32,6 +32,7 @@ public class Server {
 
   /// Completion queue used for server operations
   let completionQueue: CompletionQueue
+    let queueTimeout : TimeInterval
 
   /// Optional callback when server stops serving
   public var onCompletion: (() -> Void)?
@@ -39,10 +40,11 @@ public class Server {
   /// Initializes a Server
   ///
   /// - Parameter address: the address where the server will listen
-  public init(address: String) {
+  public init(address: String, queueTimeout: TimeInterval = -1) {
     underlyingServer = cgrpc_server_create(address)
     completionQueue = CompletionQueue(
       underlyingCompletionQueue: cgrpc_server_get_completion_queue(underlyingServer), name: "Server " + address)
+     self.queueTimeout = queueTimeout
   }
 
   /// Initializes a secure Server
@@ -51,10 +53,11 @@ public class Server {
   /// - Parameter key: the private key for the server's certificates
   /// - Parameter certs: the server's certificates
   /// - Parameter rootCerts: used to validate client certificates; will enable enforcing valid client certificates when provided
-  public init(address: String, key: String, certs: String, rootCerts: String? = nil) {
+    public init(address: String, key: String, certs: String, rootCerts: String? = nil, queueTimeout: TimeInterval = -1) {
     underlyingServer = cgrpc_server_create_secure(address, key, certs, rootCerts, rootCerts == nil ? 0 : 1)
     completionQueue = CompletionQueue(
       underlyingCompletionQueue: cgrpc_server_get_completion_queue(underlyingServer), name: "Server " + address)
+        self.queueTimeout = queueTimeout
   }
 
   deinit {
@@ -76,7 +79,7 @@ public class Server {
           try handler.requestCall(tag: Server.handlerCallTag)
 
           // block while waiting for an incoming request
-          let event = self.completionQueue.wait(timeout: 600)
+          let event = self.completionQueue.wait(timeout: queueTimeout)
 
           if event.type == .complete {
             if event.tag == Server.handlerCallTag {
