@@ -24,14 +24,14 @@ var packageDependencies: [Package.Dependency] = [
   // Command line argument parser for our auxiliary command line tools.
   .package(url: "https://github.com/kylef/Commander.git", .upToNextMinor(from: "0.8.0")),
   
-  // SwiftGRPCNIO dependencies:
-  // Transitive dependencies
-  .package(url: "https://github.com/apple/swift-nio-zlib-support.git", from: "1.0.0"),
-  .package(url: "https://github.com/apple/swift-nio-nghttp2-support.git", from: "1.0.0"),
-  // Main SwiftNIO package
-  .package(url: "https://github.com/apple/swift-nio.git", from: "1.12.0"),
-  // HTTP2 via SwiftNIO
-  .package(url: "https://github.com/apple/swift-nio-http2.git", from: "0.2.1")
+//   // SwiftGRPCNIO dependencies:
+//   // Transitive dependencies
+//   .package(url: "https://github.com/apple/swift-nio-zlib-support.git", from: "1.0.0"),
+//   .package(url: "https://github.com/apple/swift-nio-nghttp2-support.git", from: "1.0.0"),
+//   // Main SwiftNIO package
+//   .package(url: "https://github.com/apple/swift-nio.git", from: "1.12.0"),
+//   // HTTP2 via SwiftNIO
+//   .package(url: "https://github.com/apple/swift-nio-http2.git", from: "0.2.1")
   ]
 
 var cGRPCDependencies: [Target.Dependency] = []
@@ -56,18 +56,18 @@ let package = Package(
   name: "SwiftGRPC",
   products: [
     .library(name: "SwiftGRPC", targets: ["SwiftGRPC"]),
-    .library(name: "SwiftGRPCNIO", targets: ["SwiftGRPCNIO"]),
+//     .library(name: "SwiftGRPCNIO", targets: ["SwiftGRPCNIO"]),
   ],
   dependencies: packageDependencies,
   targets: [
     .target(name: "SwiftGRPC",
             dependencies: ["CgRPC", "SwiftProtobuf"]),
-    .target(name: "SwiftGRPCNIO",
-            dependencies: [
-              "NIOFoundationCompat",
-              "NIOHTTP1",
-              "NIOHTTP2",
-              "SwiftProtobuf"]),
+//     .target(name: "SwiftGRPCNIO",
+//             dependencies: [
+//               "NIOFoundationCompat",
+//               "NIOHTTP1",
+//               "NIOHTTP2",
+//               "SwiftProtobuf"]),
     .target(name: "CgRPC",
             dependencies: cGRPCDependencies),
     .target(name: "RootsEncoder"),
@@ -83,17 +83,17 @@ let package = Package(
               "SwiftProtobuf",
               "Commander"],
             path: "Sources/Examples/Echo"),
-    .target(name: "EchoNIO",
-            dependencies: [
-              "SwiftGRPCNIO",
-              "SwiftProtobuf",
-              "Commander"],
-            path: "Sources/Examples/EchoNIO"),
+//     .target(name: "EchoNIO",
+//             dependencies: [
+//               "SwiftGRPCNIO",
+//               "SwiftProtobuf",
+//               "Commander"],
+//             path: "Sources/Examples/EchoNIO"),
     .target(name: "Simple",
             dependencies: ["SwiftGRPC", "Commander"],
             path: "Sources/Examples/Simple"),
     .testTarget(name: "SwiftGRPCTests", dependencies: ["SwiftGRPC"]),
-    .testTarget(name: "SwiftGRPCNIOTests", dependencies: ["SwiftGRPC", "SwiftGRPCNIO"])
+//     .testTarget(name: "SwiftGRPCNIOTests", dependencies: ["SwiftGRPC", "SwiftGRPCNIO"])
   ],
   swiftLanguageVersions: [.v4, .v4_2, .version("5")],
   cLanguageStandard: .gnu11,
