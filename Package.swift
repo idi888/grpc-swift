@@ -17,7 +17,7 @@
 import PackageDescription
 import Foundation
 
-var packageDependencies: [gi.Dependency] = [
+var packageDependencies: [Package.Dependency] = [
   // Official SwiftProtobuf library, for [de]serializing data to send on the wire.
   .package(url: "https://github.com/apple/swift-protobuf.git", .upToNextMajor(from: "1.5.0")),
   
