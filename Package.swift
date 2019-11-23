@@ -17,7 +17,7 @@
 import PackageDescription
 import Foundation
 
-var packageDependencies: [Package.Dependency] = [
+var packageDependencies: [gi.Dependency] = [
   // Official SwiftProtobuf library, for [de]serializing data to send on the wire.
   .package(url: "https://github.com/apple/swift-protobuf.git", .upToNextMajor(from: "1.5.0")),
   
@@ -93,7 +93,7 @@ let package = Package(
             dependencies: ["SwiftGRPC", "Commander"],
             path: "Sources/Examples/Simple"),
     .testTarget(name: "SwiftGRPCTests", dependencies: ["SwiftGRPC"]),
-//     .testTarget(name: "SwiftGRPCNIOTests", dependencies: ["SwiftGRPC", "SwiftGRPCNIO"])
+//     .testTarget(name: "SwiftGRPCNIOTests", dependencies: ["SwiftGRPC", "SwiftGRPCNIO"])rm P
   ],
   swiftLanguageVersions: [.v4, .v4_2, .version("5")],
   cLanguageStandard: .gnu11,

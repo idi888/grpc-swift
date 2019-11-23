@@ -32,7 +32,7 @@ public class Server {
     
     /// Completion queue used for server operations
     let completionQueue: CompletionQueue
-    let queueTimeout : TimeInterval
+//    let queueTimeout : TimeInterval
     
     /// Delay for which the spin loop should wait before starting over.
     let loopTimeout: TimeInterval
